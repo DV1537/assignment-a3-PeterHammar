@@ -19,8 +19,8 @@ double Polygon::area()
     }
     polyArea += arrayPoly[0].x * (arrayPoly[1].y - arrayPoly[sizeOfArray - 1].y);
     polyArea += arrayPoly[sizeOfArray-1].x*(arrayPoly[0].y-arrayPoly[sizeOfArray-2].y);
-    //absolute value
-    if (polyArea < 0)
+
+    if(polyArea < 0)
     {
         polyArea *= -1;
     }
@@ -146,4 +146,14 @@ Polygon::Polygon()
 {
     arrayPoly = nullptr;
     sizeOfArray = 0;
+}
+
+Coordinates* Polygon::getCoordinates()
+{
+    return arrayPoly;
+}
+
+int Polygon::getSize()
+{
+    return sizeOfArray;
 }

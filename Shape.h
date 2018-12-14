@@ -21,6 +21,8 @@ class Shape
     virtual Coordinates position() = 0;
     virtual bool isConvex() = 0;
     virtual double distance(Shape *s) = 0;
+    virtual Coordinates* getCoordinates() = 0;
+    virtual int getSize() = 0;
 protected:
 };
 

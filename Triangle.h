@@ -6,21 +6,21 @@
 class Triangle : public Shape
 {
 public:
-    Triangle(Coordinates coordinatesT1, Coordinates coordinatesT2, Coordinates coordinatesT3);
+    Triangle();
+    Triangle(Coordinates *arrayTriangle, int sizeOfArray);
+    Triangle(const Triangle& triangle);
     std::string getType() override;
     double area() override;
     double circumference() override;
     Coordinates position() override;
     bool isConvex() override;
     double distance(Shape *s) override;
-    
-    Coordinates getCoordinateT1() const;
-    Coordinates getCoordinateT2() const;
-    Coordinates getCoordinateT3() const;
+
+    Coordinates* getCoordinates() override;
+    int getSize() override;
 private:
-    Coordinates coordinatesT1;
-    Coordinates coordinatesT2;
-    Coordinates coordinatesT3; 
+    Coordinates *arrayTriangle;
+    int sizeOfArray;
 };
 
 #endif

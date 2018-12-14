@@ -17,11 +17,25 @@ double Point::circumference()
 
 Coordinates Point::position() 
 {
+    Coordinates coordinates;
+    int sumX = 0;
+    int sumY = 0;
+    for (int i = 0; i < sizeOfArray; i++)
+    {
+        sumX += arrayPoint[i].x; 
+        sumY += arrayPoint[i].y; 
+    }
+    double avgX = static_cast<double>(sumX) / (sizeOfArray);
+    double avgY = static_cast<double>(sumY) / (sizeOfArray);
+    coordinates.x = avgX;
+    coordinates.y = avgY;
+
     return coordinates;
 }
-Point::Point(Coordinates c)
+Point::Point(Coordinates *array, int size)
 {
-    coordinates = c;
+    arrayPoint = array;
+    sizeOfArray = size;
 }
 
 bool Point::isConvex()
@@ -34,7 +48,23 @@ double Point::distance(Shape *s)
 
 }
 
-Coordinates Point::getCoordinate() const
+int Point::getSize()
 {
-    return coordinates;
+    return sizeOfArray;
 }
+
+Coordinates* Point::getCoordinates()
+{
+    return arrayPoint;
+}
+
+Point::Point(const Point& point)
+{
+    sizeOfArray = point.sizeOfArray;
+    arrayPoint = new Coordinates[sizeOfArray];
+    for(int i = 0; i < sizeOfArray; i++)
+    {
+        arrayPoint[i] = point.arrayPoint[i];
+    }
+}
+

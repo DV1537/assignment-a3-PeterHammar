@@ -6,16 +6,21 @@
 class Point : public Shape
 {
 public:
-    Point(Coordinates coordinates);
+    Point();
+    Point(Coordinates *arrayPoint, int sizeOfArray);
+    Point(const Point& point);
     std::string getType() override;
     double area() override;
     double circumference() override;
     Coordinates position() override;
     bool isConvex() override;
     double distance(Shape *s) override;
-    Coordinates getCoordinate() const;
+
+    int getSize() override;
+    Coordinates* getCoordinates() override;
 private:
-    Coordinates coordinates;
+    Coordinates *arrayPoint;
+    int sizeOfArray;
 };
 
 #endif

@@ -1,163 +1,233 @@
 #include "Shapemodifier.h"
-
-Polygon operator+(const Polygon& lhs, const Polygon& rhs)
+Coordinates* mergeCoordinateArrays(Coordinates* cArray1, int size1, Coordinates* cArray2, int size2)
 {
-    Polygon newPolygon;
-    newPolygon.sizeOfArray = rhs.sizeOfArray + lhs.sizeOfArray;
-    Coordinates * newArray = new Coordinates[newPolygon.sizeOfArray];
-
-    for(int i = 0; i < lhs.sizeOfArray; i++)
+    Coordinates * newArray = new Coordinates[size1+size2];
+    for(int i = 0; i < size1; i++)
     {
-        newArray[i] = lhs.arrayPoly[i];
+        newArray[i] = cArray1[i];
     }
-    for(int i = lhs.sizeOfArray; i < newPolygon.sizeOfArray; i++)
+    for(int i = size1; i < (size1+size2); i++)
     {
-        newArray[i] = rhs.arrayPoly[i-lhs.sizeOfArray];
+        newArray[i] = cArray2[i-size1];
     }
+    return newArray;
+}
 
-    // point poly to newly created array.
-    newPolygon.arrayPoly = newArray;
+Polygon operator+(Polygon& lhs, Polygon& rhs)
+{   
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
+
+        int sizeOfNewPolygon = (lhs.getSize() + rhs.getSize());
+    
+    Polygon newPolygon(newArray, sizeOfNewPolygon);
 
     return newPolygon;
 }
 
-/*       
-*       no need because im only loading polygons from the file,
-*       im aware that polygon is a bad name since the file may give me points or lines
-*       may give me points or lines but it is how it is
-*
-Polygon operator+(const Polygon& lhs, const Triangle& rhs)
+Polygon operator+(Polygon& lhs, Triangle& rhs)
 {
-    Coordinates * newArray = new Coordinates[3];
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
 
-    newArray[0] = rhs.getCoordinateT1();
-    newArray[1] = rhs.getCoordinateT2();
-    newArray[2] = rhs.getCoordinateT3();
+            int sizeOfNewPolygon = (lhs.getSize() + rhs.getSize());
 
-    Polygon triangle(newArray, 3);
 
-    return lhs + triangle;
+        Polygon newPolygon(newArray, sizeOfNewPolygon);
+
+    return newPolygon;
 }
 
-Polygon operator+(const Triangle& lhs, const Polygon& rhs)
+Polygon operator+(Triangle& lhs, Polygon& rhs)
 {
-    Coordinates * newArray = new Coordinates[3];
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
 
-    newArray[0] = lhs.getCoordinateT1();
-    newArray[1] = lhs.getCoordinateT2();
-    newArray[2] = lhs.getCoordinateT3();
+            int sizeOfNewPolygon = (lhs.getSize() + rhs.getSize());
 
-    Polygon triangle(newArray, 3);
 
-    return triangle + rhs;
+        Polygon newPolygon(newArray, sizeOfNewPolygon);
+
+    return newPolygon;
 }
 
 
-Polygon operator+(const Polygon& lhs, const Line& rhs)
+Polygon operator+(Polygon& lhs, Line& rhs)
 {
-    Coordinates * newArray = new Coordinates[2];
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
 
-    newArray[0] = rhs.getCoordinateL1();
-    newArray[1] = rhs.getCoordinateL2();
+            int sizeOfNewPolygon = (lhs.getSize() + rhs.getSize());
 
-    Polygon line(newArray, 2);
 
-    return lhs + line;
+        Polygon newPolygon(newArray, sizeOfNewPolygon);
+
+    return newPolygon;
 }
 
-Polygon operator+(const Line& lhs, const Polygon& rhs)
+Polygon operator+(Line& lhs, Polygon& rhs)
 {
-    Coordinates * newArray = new Coordinates[2];
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
 
-    newArray[0] = lhs.getCoordinateL1();
-    newArray[1] = lhs.getCoordinateL2();
+            int sizeOfNewPolygon = (lhs.getSize() + rhs.getSize());
 
-    Polygon line(newArray, 2);
 
-    return line + rhs;
+        Polygon newPolygon(newArray, sizeOfNewPolygon);
+
+    return newPolygon;
 }
 
-Polygon operator+(const Polygon& lhs, const Point& rhs)
+Polygon operator+(Polygon& lhs, Point& rhs)
 {
-    Coordinates * newArray = new Coordinates[1];
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
 
-    newArray[0] = rhs.getCoordinate();
+            int sizeOfNewPolygon = (lhs.getSize() + rhs.getSize());
 
-    Polygon point(newArray, 1);
 
-    return lhs + point;
+        Polygon newPolygon(newArray, sizeOfNewPolygon);
+
+    return newPolygon;
 }
 
-Polygon operator+(const Point& lhs, const Polygon& rhs)
+Polygon operator+(Point& lhs, Polygon& rhs)
 {
-    Coordinates * newArray = new Coordinates[1];
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
 
-    newArray[0] = lhs.getCoordinate();
+            int sizeOfNewPolygon = (lhs.getSize() + rhs.getSize());
 
-    Polygon point(newArray, 1);
 
-    return lhs + point;
+        Polygon newPolygon(newArray, sizeOfNewPolygon);
+
+    return newPolygon;
 }
 
-Polygon operator+(const Triangle& lhs, const Triangle& rhs)
+Polygon operator+(Triangle& lhs, Triangle& rhs)
 {
-    Coordinates * newArray = new Coordinates[3];
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
 
-    newArray[0] = rhs.getCoordinateT1();
-    newArray[1] = rhs.getCoordinateT2();
-    newArray[2] = rhs.getCoordinateT3();
+            int sizeOfNewPolygon = (lhs.getSize() + rhs.getSize());
 
-    Polygon triangle(newArray, 3);
-    
-    return lhs + triangle;
+
+        Polygon newPolygon(newArray, sizeOfNewPolygon);
+
+    return newPolygon;
 }
 
-Polygon operator+(const Triangle& lhs, const Line& rhs)
+Polygon operator+(Triangle& lhs, Line& rhs)
 {
-    Coordinates * newArray = new Coordinates[2];
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
 
-    newArray[0] = rhs.getCoordinateL1();
-    newArray[1] = rhs.getCoordinateL2();
+            int sizeOfNewPolygon = (lhs.getSize() + rhs.getSize());
 
-    Polygon line(newArray, 2);
 
-    return lhs + line;
+        Polygon newPolygon(newArray, sizeOfNewPolygon);
+
+    return newPolygon;
 }
-Polygon operator+(const Line& lhs, const Triangle& rhs)
+Polygon operator+(Line& lhs, Triangle& rhs)
 {
-    Coordinates * newArray = new Coordinates[2];
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
 
-    newArray[0] = lhs.getCoordinateL1();
-    newArray[1] = lhs.getCoordinateL2();
+            int sizeOfNewPolygon = (lhs.getSize() + rhs.getSize());
 
-    Polygon line(newArray, 2);
 
-    return line + rhs;
-}
+        Polygon newPolygon(newArray, sizeOfNewPolygon);
 
-Polygon operator+(const Line& lhs, const Line& rhs)
-{
-    Coordinates * newArray = new Coordinates[2];
-
-    newArray[0] = lhs.getCoordinateL1();
-    newArray[1] = lhs.getCoordinateL2();
-
-    Polygon line(newArray, 2);
-
-    return line + rhs;
+    return newPolygon;
 }
 
-Triangle operator+(const Line& lhs, const Point& rhs)
+Polygon operator+(Triangle& lhs, Point& rhs)
 {
-    return Triangle(lhs.getCoordinateL1(), lhs.getCoordinateL2(), rhs.getCoordinate());
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
+
+            int sizeOfNewPolygon = (lhs.getSize() + rhs.getSize());
+
+
+        Polygon newPolygon(newArray, sizeOfNewPolygon);
+
+    return newPolygon;
 }
-Triangle operator+(const Point& lhs, const Line& rhs)
+Polygon operator+(Point& lhs, Triangle& rhs)
 {
-    return Triangle(lhs.getCoordinate(), rhs.getCoordinateL1(), rhs.getCoordinateL2());
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
+
+            int sizeOfNewPolygon = (lhs.getSize() + rhs.getSize());
+
+
+        Polygon newPolygon(newArray, sizeOfNewPolygon);
+
+    return newPolygon;
 }
 
-Line operator+(const Point& lhs, const Point& rhs)
+Polygon operator+(Line& lhs, Line& rhs)
 {
-    return Line(lhs.getCoordinate(), rhs.getCoordinate());
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
+
+            int sizeOfNewPolygon = (lhs.getSize() + rhs.getSize());
+
+
+        Polygon newPolygon(newArray, sizeOfNewPolygon);
+
+    return newPolygon;
 }
-*/
+
+Triangle operator+(Line& lhs, Point& rhs)
+{
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
+
+    int sizeOfNewTriangle = lhs.getSize() + rhs.getSize();
+
+    Triangle newTriangle(newArray, sizeOfNewTriangle);
+
+    return newTriangle;
+}
+
+Triangle operator+(Point& lhs, Line& rhs)
+{
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
+
+    int sizeOfNewTriangle = lhs.getSize() + rhs.getSize();
+
+    Triangle newTriangle(newArray, sizeOfNewTriangle);
+
+    return newTriangle;
+}
+
+Line operator+(Point& lhs, Point& rhs)
+{
+    Coordinates* newArray = mergeCoordinateArrays(
+                            lhs.getCoordinates(), lhs.getSize(), 
+                            rhs.getCoordinates(), rhs.getSize());
+
+    int sizeOfNewLine = lhs.getSize() + rhs.getSize();
+
+    Line newLine(newArray, sizeOfNewLine);
+
+    return newLine;
+}

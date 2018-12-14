@@ -18,7 +18,9 @@ public:
     double distance(Shape *s) override;
     friend std::ostream &operator<<(std::ostream&, const Polygon& polygon);
     friend Polygon operator+(const Polygon& polygon, const Coordinates& coordinates);
-    friend Polygon operator+(const Polygon& lhs, const Polygon& rhs);
+
+    Coordinates* getCoordinates() override;
+    int getSize() override;
     
 private:
     Coordinates *arrayPoly;

@@ -6,7 +6,9 @@
 class Line : public Shape
 {
 public:
-    Line(Coordinates coordinatesL1, Coordinates coordinatesL2);
+    Line();
+    Line(Coordinates *arrayLine, int sizeOfArray);
+    Line(const Line& line);
     std::string getType() override;
     double area() override;
     double circumference() override;
@@ -14,11 +16,12 @@ public:
     bool isConvex() override;
     double distance(Shape *s) override;
 
-    Coordinates getCoordinateL1() const;
-    Coordinates getCoordinateL2() const;
+    Coordinates* getCoordinates() override;
+    int getSize() override;
+
 private:
-    Coordinates coordinatesL1;
-    Coordinates coordinatesL2;
+    Coordinates *arrayLine;
+    int sizeOfArray;
 };
 
 #endif

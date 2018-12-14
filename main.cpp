@@ -10,6 +10,7 @@
 #include <sstream>
 using namespace std;
 
+Shape& defineShape(Coordinates *array, int sizeOfArray);
 void printType(Shape *shape);
 void printPosition(Shape *shape);
 void printArea(Shape *shape);
@@ -88,36 +89,165 @@ int main()
     }
     myReadFile.close();
 
-    // Regardless of the amount, create two polygons out of the given coordinates, 
-    // and create a third polygon out of the two previous ones
-    Coordinates *arrayPoly1 = new Coordinates[sizeOfArray1];
-    Coordinates *arrayPoly2 = new Coordinates[sizeOfArray2];
+    Coordinates *arrayShape1 = new Coordinates[sizeOfArray1];
+    Coordinates *arrayShape2 = new Coordinates[sizeOfArray2];
 
     for (int i = 0; i < sizeOfArray1; i += 2)
     {
-        arrayPoly1[i / 2].x = array1[i];
-        arrayPoly1[i / 2].y = array1[i + 1];
+        arrayShape1[i / 2].x = array1[i];
+        arrayShape1[i / 2].y = array1[i + 1];
     }
 
-    Polygon polygon1(arrayPoly1, sizeOfArray1/2);
-      
+    Shape &shape1 = defineShape(arrayShape1, sizeOfArray1);
+
     for (int i = 0; i < sizeOfArray2; i += 2)
     {
-        arrayPoly2[i / 2].x = array2[i];
-        arrayPoly2[i / 2].y = array2[i + 1];
+        arrayShape2[i / 2].x = array2[i];
+        arrayShape2[i / 2].y = array2[i + 1];
     }
 
-    Polygon polygon2(arrayPoly2, sizeOfArray2/2);
+    Shape &shape2 = defineShape(arrayShape2, sizeOfArray2);
 
-    Polygon polygon3;
-    polygon3 = polygon1 + polygon2;
+    cout << "area for shape is: \n";
+    if (sizeOfArray1 == 2)
+    {
+        Point shape1 = Point(arrayShape1, sizeOfArray1/2);
+        if (sizeOfArray2 == 2)
+        {
+            Point shape2 = Point(arrayShape2, sizeOfArray2/2);
+            Line shape = shape1 + shape2;
+            printArea(&shape);
+        }
+        if (sizeOfArray2 == 4)
+        {
+            Line shape2 = Line(arrayShape2, sizeOfArray2/2);
+            Triangle shape = shape1 + shape2;
+            printArea(&shape);
+        }
+        if (sizeOfArray2 == 6)
+        {
+            Triangle shape2 = Triangle(arrayShape2, sizeOfArray2/2);
+            Polygon shape = shape1 + shape2;
+            printArea(&shape);
+        }
+        if (sizeOfArray2 >= 8)
+        {
+            Polygon shape2 = Polygon(arrayShape2, sizeOfArray2/2);
+            Polygon shape = shape1 + shape2;
+            printArea(&shape);
+        }
+    }
+    if (sizeOfArray1 == 4)
+    {
+        Line shape1 = Line(arrayShape1, sizeOfArray1/2);
+        if (sizeOfArray2 == 2)
+        {
+            Point shape2 = Point(arrayShape2, sizeOfArray2/2);
+            Triangle shape = shape1 + shape2;
+            printArea(&shape);
+        }
+        if (sizeOfArray2 == 4)
+        {
+            Line shape2 = Line(arrayShape2, sizeOfArray2/2);
+            Polygon shape = shape1 + shape2;
+            printArea(&shape);
+        }
+        if (sizeOfArray2 == 6)
+        {
+            Triangle shape2 = Triangle(arrayShape2, sizeOfArray2/2);
+            Polygon shape = shape1 + shape2;
+            printArea(&shape);
+        }
+        if (sizeOfArray2 >= 8)
+        {
+            Polygon shape2 = Polygon(arrayShape2, sizeOfArray2/2);
+            Polygon shape = shape1 + shape2;
+            printArea(&shape);
+        }
+    }
+    if (sizeOfArray1 == 6)
+    {
+        Triangle shape1 = Triangle(arrayShape1, sizeOfArray1/2);
+        if (sizeOfArray2 == 2)
+        {
+            Point shape2 = Point(arrayShape2, sizeOfArray2/2);
+            Polygon shape = shape1 + shape2;
+            printArea(&shape);
+        }
+        if (sizeOfArray2 == 4)
+        {
 
-    printType(&polygon3);
-    printPosition(&polygon3);
-    printArea(&polygon3);
-    printCircumference(&polygon3);
+            Line shape2 = Line(arrayShape2, sizeOfArray2/2);
 
+            Polygon shape = shape1 + shape2;
+
+            printArea(&shape);
+        }
+        if (sizeOfArray2 == 6)
+        {
+            Triangle shape2 = Triangle(arrayShape2, sizeOfArray2/2);
+            Polygon shape = shape1 + shape2;
+            printArea(&shape);
+        }
+        if (sizeOfArray2 >= 8)
+        {
+            Polygon shape2 = Polygon(arrayShape2, sizeOfArray2/2);
+            Polygon shape = shape1 + shape2;
+            printArea(&shape);
+        }
+    }
+    if (sizeOfArray1 >= 8)
+    {
+        Polygon shape1 = Polygon(arrayShape1, sizeOfArray1/2);
+        if (sizeOfArray2 == 2)
+        {
+            Point shape2 = Point(arrayShape2, sizeOfArray2/2);
+            Polygon shape = shape1 + shape2;
+            printArea(&shape);
+        }
+        if (sizeOfArray2 == 4)
+        {
+            Line shape2 = Line(arrayShape2, sizeOfArray2/2);
+            Polygon shape = shape1 + shape2;
+            printArea(&shape);
+        }
+        if (sizeOfArray2 == 6)
+        {
+            Triangle shape2 = Triangle(arrayShape2, sizeOfArray2/2);
+            Polygon shape = shape1 + shape2;
+            printArea(&shape);
+        }
+        if (sizeOfArray2 >= 8)
+        {
+            Polygon shape2 = Polygon(arrayShape2, sizeOfArray2/2);
+            Polygon shape = shape1 + shape2;
+            printArea(&shape);
+        }
+    }
     return 0;
+}
+
+Shape& defineShape(Coordinates *array, int sizeOfArray)
+{
+    Shape *newShape;
+    if(sizeOfArray == 2)
+    {
+        newShape = new Point(array, sizeOfArray);
+    }
+    else if(sizeOfArray == 4)
+    {
+        newShape = new Line(array, sizeOfArray);
+    }
+    else if(sizeOfArray == 6)
+    {
+        newShape = new Triangle(array, sizeOfArray);
+    }
+    else if(sizeOfArray > 6)
+    {
+        newShape = new Polygon(array, sizeOfArray);
+    }
+
+    return *newShape;
 }
 
 void printType(Shape *shape)
@@ -134,7 +264,7 @@ void printArea(Shape *shape)
 {
     double area = shape->area();
 
-    std::cout << "area is: " << area << std::endl;
+    std::cout << " " << area << std::endl;
 }
 
 void printCircumference(Shape *shape)

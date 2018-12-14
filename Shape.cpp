@@ -1,5 +1,7 @@
 #include "Shape.h"
 
+
+
 //- getType() returns a string denoting type of a shape (point, line, polygon ..)
 //- area() returns area of the object, or -1 if the shape is concave, intersecting, or does not have an area
 //- circumreference() returns circumreference of the object

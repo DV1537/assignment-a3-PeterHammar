@@ -19,16 +19,25 @@ Coordinates Line::position()
 {
 
     Coordinates coordinates;
+    int sumX = 0;
+    int sumY = 0;
+    for (int i = 0; i < sizeOfArray; i++)
+    {
+        sumX += arrayLine[i].x; // 
+        sumY += arrayLine[i].y; //
+    }
+    double avgX = static_cast<double>(sumX) / (sizeOfArray);
+    double avgY = static_cast<double>(sumY) / (sizeOfArray);
+    coordinates.x = avgX;
+    coordinates.y = avgY;
 
-    coordinates.x = (coordinatesL1.x + coordinatesL2.x)/2;
-    coordinates.y = (coordinatesL1.y + coordinatesL2.y)/2;
     return coordinates;
 }
 
-Line::Line(Coordinates cL1, Coordinates cL2)
+Line::Line(Coordinates *array, int size)
 {
-    coordinatesL1 = cL1;
-    coordinatesL2 = cL2;
+    arrayLine = array;
+    sizeOfArray = size;
 }
 
 bool Line::isConvex()
@@ -41,12 +50,22 @@ double Line::distance(Shape *s)
 
 }
 
-Coordinates Line::getCoordinateL1() const
+int Line::getSize()
+{
+    return sizeOfArray;
+}
+Coordinates* Line::getCoordinates()
 { 
-    return coordinatesL1;
+    return arrayLine;
 }
 
-Coordinates Line::getCoordinateL2() const
-{ 
-    return coordinatesL2;
+Line::Line(const Line& line)
+{
+    sizeOfArray = line.sizeOfArray;
+    arrayLine = new Coordinates[sizeOfArray];
+    for(int i = 0; i < sizeOfArray; i++)
+    {
+        arrayLine[i] = line.arrayLine[i];
+    }
 }
+
